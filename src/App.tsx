@@ -1,24 +1,25 @@
+import { PDFDownloadLink } from '@react-pdf/renderer';
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import InvoiceOutput from './InvoiceOutput';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="react-pdf-generator-root">
+      {/* <InvoiceOutput /> */}
+
+      <PDFDownloadLink
+        document={<InvoiceOutput />}
+        fileName="generated.pdf"
+        style={{
+          color: 'red',
+        }}
+      >
+        {({ blob, url, loading, error }) => {
+          console.log(url);
+
+          return <button>{loading ? 'Loading document...' : 'Download Pdf'}</button>;
+        }}
+      </PDFDownloadLink>
     </div>
   );
 }
