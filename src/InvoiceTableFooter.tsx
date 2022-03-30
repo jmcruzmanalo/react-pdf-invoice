@@ -2,28 +2,33 @@ import React, { FC } from 'react';
 import { Text, View, StyleSheet } from '@react-pdf/renderer';
 import { InvoiceItem } from './InvoiceInterface';
 
-const borderColor = '#90e5fc';
 const styles = StyleSheet.create({
+  totalContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    width: '50%',
+    marginTop: 10,
+    flexGrow: 1,
+  },
   row: {
     flexDirection: 'row',
-    borderBottomColor: '#bff0fd',
-    borderBottomWidth: 1,
     alignItems: 'center',
-    height: 24,
-    fontSize: 12,
-    fontStyle: 'bold',
+    justifyContent: 'flex-end',
+    fontSize: 13,
+    paddingBottom: 5,
   },
   description: {
-    width: '85%',
+    width: '55%',
     textAlign: 'right',
-    borderRightColor: borderColor,
-    borderRightWidth: 1,
-    paddingRight: 8,
+    paddingRight: 5,
+    fontWeight: 'bold',
+    fontFamily: 'Poppins',
   },
   total: {
-    width: '15%',
+    width: '45%',
     textAlign: 'right',
-    paddingRight: 8,
+    paddingRight: 5,
+    fontFamily: 'Poppins',
   },
 });
 
@@ -36,9 +41,19 @@ const InvoiceTableFooter: FC<InvoiceTableFooterProps> = ({ items }) => {
     .map((item) => item.qty * item.rate)
     .reduce((accumulator, currentValue) => accumulator + currentValue, 0);
   return (
-    <View style={styles.row}>
-      <Text style={styles.description}>TOTAL</Text>
-      <Text style={styles.total}>{total.toFixed(2)}</Text>
+    <View style={styles.totalContainer}>
+      <View style={styles.row}>
+        <Text style={styles.description}>SUBTOTAL</Text>
+        <Text style={styles.total}>{total.toLocaleString(undefined, { maximumFractionDigits: 2 })}</Text>
+      </View>
+      <View style={styles.row}>
+        <Text style={styles.description}>GST</Text>
+        <Text style={styles.total}>{total.toLocaleString(undefined, { maximumFractionDigits: 2 })}</Text>
+      </View>
+      <View style={styles.row}>
+        <Text style={styles.description}>GRANDTOTAL</Text>
+        <Text style={styles.total}>{total.toLocaleString(undefined, { maximumFractionDigits: 2 })}</Text>
+      </View>
     </View>
   );
 };

@@ -12,9 +12,11 @@ const styles = StyleSheet.create({
   tableContainer: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    marginTop: 24,
+    marginTop: 0,
     borderWidth: 1,
-    borderColor: '#bff0fd',
+    borderColor: '#efefef',
+    width: '100%',
+    marginBottom: 10,
   },
 });
 
@@ -26,8 +28,7 @@ const InvoiceItemsTable: FC<InvoiceItemTableProps> = ({ invoice }) => (
   <View style={styles.tableContainer}>
     <InvoiceTableHeader />
     <InvoiceTableRow items={invoice.items} />
-    <InvoiceTableBlankSpace rowsCount={tableRowsCount - invoice.items.length} />
-    <InvoiceTableFooter items={invoice.items} />
+    {/* <InvoiceTableBlankSpace rowsCount={tableRowsCount - invoice.items.length} /> */}
   </View>
 );
 

@@ -1,47 +1,57 @@
 export interface Invoice {
-  balance: number;
   items: InvoiceItem[];
 }
 
 export interface InvoiceItem {
-  sno: number;
+  ndisno: number;
+  serviceDate: Date;
   desc: string;
   qty: number;
   rate: number;
+  gst: boolean;
 }
 
 export const sampleData: Invoice = {
-  balance: 2283.74,
   items: [
     {
-      sno: 1,
+      ndisno: 1,
+      serviceDate: new Date('2022-03-03'),
       desc: 'ad sunt culpa occaecat qui',
       qty: 5,
       rate: 405.89,
+      gst: true,
     },
     {
-      sno: 2,
-      desc: 'cillum quis sunt qui aute',
+      ndisno: 2,
+      serviceDate: new Date('2022-03-03'),
+      desc: 'ad sunt culpa occaecat qui',
       qty: 5,
-      rate: 373.11,
+      rate: 405.89,
+      gst: true,
     },
     {
-      sno: 3,
-      desc: 'ea commodo labore culpa irure',
+      ndisno: 3,
+      serviceDate: new Date('2022-03-03'),
+      desc: 'ad sunt culpa occaecat qui',
       qty: 5,
-      rate: 458.61,
+      rate: 405.89,
+      gst: true,
     },
     {
-      sno: 4,
-      desc: 'nisi consequat et adipisicing dolor',
-      qty: 10,
-      rate: 725.24,
+      ndisno: 4,
+      serviceDate: new Date('2022-03-03'),
+      desc: 'ad sunt culpa occaecat qui',
+      qty: 5,
+      rate: 405.89,
+      gst: true,
     },
     {
-      sno: 5,
-      desc: 'proident cillum anim elit esse',
-      qty: 4,
-      rate: 141.02,
+      ndisno: 5,
+      serviceDate: new Date('2022-03-03'),
+      desc: 'ad sunt culpa occaecat qui',
+      qty: 5,
+      rate: 405.89,
+      gst: true,
     },
   ],
 };

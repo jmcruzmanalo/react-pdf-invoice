@@ -1,13 +1,15 @@
-import { PDFDownloadLink } from '@react-pdf/renderer';
+import { PDFDownloadLink, PDFViewer } from '@react-pdf/renderer';
 import React from 'react';
 import InvoiceOutput from './InvoiceOutput';
 
 function App() {
   return (
     <div className="react-pdf-generator-root">
-      {/* <InvoiceOutput /> */}
+      <PDFViewer style={{ width: '100%', height: '100vh' }}>
+        <InvoiceOutput />
+      </PDFViewer>
 
-      <PDFDownloadLink
+      {/* <PDFDownloadLink
         document={<InvoiceOutput />}
         fileName="generated.pdf"
         style={{
@@ -19,7 +21,7 @@ function App() {
 
           return <button>{loading ? 'Loading document...' : 'Download Pdf'}</button>;
         }}
-      </PDFDownloadLink>
+      </PDFDownloadLink> */}
     </div>
   );
 }
