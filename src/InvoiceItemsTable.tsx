@@ -1,12 +1,9 @@
+import { StyleSheet, View } from '@react-pdf/renderer';
 import React, { FC } from 'react';
-import { View, StyleSheet } from '@react-pdf/renderer';
-import InvoiceTableHeader from './InvoiceTableHeader';
-
-import InvoiceTableBlankSpace from './InvoiceTableBlankSpace';
-import InvoiceTableFooter from './InvoiceTableFooter';
+import { PartialDeep } from 'type-fest';
 import { Invoice } from './InvoiceInterface';
+import InvoiceTableHeader from './InvoiceTableHeader';
 import InvoiceTableRow from './InvoiceTableRow';
-const tableRowsCount = 11;
 
 const styles = StyleSheet.create({
   tableContainer: {
@@ -21,13 +18,13 @@ const styles = StyleSheet.create({
 });
 
 interface InvoiceItemTableProps {
-  invoice: Invoice;
+  invoice: PartialDeep<Invoice>;
 }
 
 const InvoiceItemsTable: FC<InvoiceItemTableProps> = ({ invoice }) => (
   <View style={styles.tableContainer}>
     <InvoiceTableHeader />
-    <InvoiceTableRow items={invoice.items} />
+    {invoice.items && <InvoiceTableRow items={invoice.items} />}
     {/* <InvoiceTableBlankSpace rowsCount={tableRowsCount - invoice.items.length} /> */}
   </View>
 );

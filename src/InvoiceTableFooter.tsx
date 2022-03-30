@@ -1,6 +1,7 @@
 import React, { FC } from 'react';
 import { Text, View, StyleSheet } from '@react-pdf/renderer';
 import { InvoiceItem } from './InvoiceInterface';
+import { PartialDeep } from 'type-fest';
 
 const styles = StyleSheet.create({
   totalContainer: {
@@ -33,12 +34,13 @@ const styles = StyleSheet.create({
 });
 
 interface InvoiceTableFooterProps {
-  items: InvoiceItem[];
+  items: PartialDeep<InvoiceItem[]>;
 }
 
 const InvoiceTableFooter: FC<InvoiceTableFooterProps> = ({ items }) => {
   const total = items
-    .map((item) => item.qty * item.rate)
+    .filter((item): item is PartialDeep<InvoiceItem> => !!item)
+    .map((item) => (item?.qty ?? 0) * (item?.rate ?? 0))
     .reduce((accumulator, currentValue) => accumulator + currentValue, 0);
   return (
     <View style={styles.totalContainer}>

@@ -1,6 +1,7 @@
 import React, { FC, Fragment } from 'react';
 import { Text, View, StyleSheet } from '@react-pdf/renderer';
 import { InvoiceItem } from './InvoiceInterface';
+import { PartialDeep } from 'type-fest';
 
 const borderColor = '#efefef';
 const styles = StyleSheet.create({
@@ -75,29 +76,32 @@ const styles = StyleSheet.create({
 });
 
 interface InvoiceTableRowProps {
-  items: InvoiceItem[];
+  items: PartialDeep<InvoiceItem[]>;
 }
 
 const InvoiceTableRow: FC<InvoiceTableRowProps> = ({ items }) => {
-  const rows = items.map((item) => (
-    <View style={styles.row} key={item.ndisno.toString()}>
-      <Text style={styles.ndisno}>{item.ndisno}</Text>
-      <Text style={styles.serviceDate}>
-        {new Intl.DateTimeFormat('en-AU', {
-          year: 'numeric',
-          month: 'numeric',
-          day: '2-digit',
-        }).format(item.serviceDate)}
-      </Text>
-      <Text style={styles.description}>{item.desc}</Text>
-      <Text style={styles.qty}>{item.qty}</Text>
-      <Text style={styles.rate}>{item.rate.toLocaleString(undefined, { maximumFractionDigits: 2 })}</Text>
-      <Text style={styles.gst}>{item.gst ? '10%' : '0'}</Text>
-      <Text style={styles.amount}>
-        {(item.qty * item.rate).toLocaleString(undefined, { maximumFractionDigits: 2 })}
-      </Text>
-    </View>
-  ));
+  const rows = items
+    .filter((item): item is PartialDeep<InvoiceItem> => !!item)
+    .map((item) => (
+      <View style={styles.row} key={item.ndisno?.toString()}>
+        <Text style={styles.ndisno}>{item.ndisno}</Text>
+        <Text style={styles.serviceDate}>
+          {item.serviceDate &&
+            Intl.DateTimeFormat('en-AU', {
+              year: 'numeric',
+              month: 'numeric',
+              day: '2-digit',
+            }).format(new Date(item.serviceDate))}
+        </Text>
+        <Text style={styles.description}>{item.desc}</Text>
+        <Text style={styles.qty}>{item.qty}</Text>
+        <Text style={styles.rate}>{item.rate?.toLocaleString(undefined, { maximumFractionDigits: 2 })}</Text>
+        <Text style={styles.gst}>{item.gst ? '10%' : '0'}</Text>
+        <Text style={styles.amount}>
+          {((item.qty ?? 0) * (item.rate ?? 0)).toLocaleString(undefined, { maximumFractionDigits: 2 })}
+        </Text>
+      </View>
+    ));
   return <Fragment>{rows}</Fragment>;
 };
 

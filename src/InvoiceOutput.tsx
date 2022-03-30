@@ -1,7 +1,8 @@
+import { Document, Font, Page, StyleSheet, Text, View } from '@react-pdf/renderer';
 import { VFC } from 'react';
-import { Document, Page, View, Text, StyleSheet, Font } from '@react-pdf/renderer';
-import InvoiceItemsTable from './InvoiceItemsTable';
+import { PartialDeep } from 'type-fest';
 import { Invoice } from './InvoiceInterface';
+import InvoiceItemsTable from './InvoiceItemsTable';
 import InvoiceTableFooter from './InvoiceTableFooter';
 
 const poppins = require('./fonts/Poppins-Medium.ttf');
@@ -53,57 +54,13 @@ const styles = StyleSheet.create({
   },
 });
 
-const invoice: Invoice = {
-  items: [
-    {
-      ndisno: 1,
-      serviceDate: new Date('2022-03-03'),
-      desc: 'ad sunt culpa occaecat qui',
-      qty: 5,
-      rate: 405.89,
-      gst: true,
-    },
-    {
-      ndisno: 2,
-      serviceDate: new Date('2022-03-03'),
-      desc: 'ad sunt culpa occaecat qui',
-      qty: 5,
-      rate: 405.89,
-      gst: true,
-    },
-    {
-      ndisno: 3,
-      serviceDate: new Date('2022-03-03'),
-      desc: 'ad sunt culpa occaecat qui',
-      qty: 5,
-      rate: 405.89,
-      gst: true,
-    },
-    {
-      ndisno: 4,
-      serviceDate: new Date('2022-03-03'),
-      desc: 'ad sunt culpa occaecat qui',
-      qty: 5,
-      rate: 405.89,
-      gst: true,
-    },
-    {
-      ndisno: 5,
-      serviceDate: new Date('2022-03-03'),
-      desc: 'ad sunt culpa occaecat qui',
-      qty: 5,
-      rate: 405.89,
-      gst: true,
-    },
-  ],
-};
-const InvoiceOutput: VFC = () => {
+const InvoiceOutput: VFC<{ invoice: PartialDeep<Invoice> }> = ({ invoice }) => {
   return (
     <Document>
       <Page size="A4" style={styles.page}>
         <View style={styles.billDetails}>
           <View style={styles.section}>
-            <Text style={styles.title}>Company Name</Text>
+            <Text style={styles.title}>{invoice.companyName}</Text>
             <Text style={styles.text}>ABN: </Text>
             <Text style={styles.text}>Address:</Text>
             <Text style={styles.text}>State</Text>
@@ -132,7 +89,7 @@ const InvoiceOutput: VFC = () => {
             <Text style={styles.text}>BSB:</Text>
             <Text style={styles.text}>Account No.:</Text>
           </View>
-          <InvoiceTableFooter items={invoice.items} />
+          {invoice.items && <InvoiceTableFooter items={invoice.items} />}
         </View>
         <Text
           style={styles.pageNumber}
@@ -143,4 +100,5 @@ const InvoiceOutput: VFC = () => {
     </Document>
   );
 };
+
 export default InvoiceOutput;
