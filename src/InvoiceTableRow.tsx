@@ -82,26 +82,33 @@ interface InvoiceTableRowProps {
 const InvoiceTableRow: FC<InvoiceTableRowProps> = ({ items }) => {
   const rows = items
     .filter((item): item is PartialDeep<InvoiceItem> => !!item)
-    .map((item) => (
-      <View style={styles.row} key={item.ndisno?.toString()}>
-        <Text style={styles.ndisno}>{item.ndisno}</Text>
-        <Text style={styles.serviceDate}>
-          {item.serviceDate &&
-            Intl.DateTimeFormat('en-AU', {
-              year: 'numeric',
-              month: 'numeric',
-              day: '2-digit',
-            }).format(new Date(item.serviceDate))}
-        </Text>
-        <Text style={styles.description}>{item.desc}</Text>
-        <Text style={styles.qty}>{item.qty}</Text>
-        <Text style={styles.rate}>{item.rate?.toLocaleString(undefined, { maximumFractionDigits: 2 })}</Text>
-        <Text style={styles.gst}>{item.gst ? '10%' : '0'}</Text>
-        <Text style={styles.amount}>
-          {((item.qty ?? 0) * (item.rate ?? 0)).toLocaleString(undefined, { maximumFractionDigits: 2 })}
-        </Text>
-      </View>
-    ));
+    .map((item) => {
+      const { gst, qty = 0, rate = 0 } = item;
+      let total = rate * qty;
+
+      if (gst === true) {
+        total = total * 0.1 + total;
+      }
+
+      return (
+        <View style={styles.row} key={item.ndisno?.toString()}>
+          <Text style={styles.ndisno}>{item.ndisno}</Text>
+          <Text style={styles.serviceDate}>
+            {item.serviceDate &&
+              Intl.DateTimeFormat('en-AU', {
+                year: 'numeric',
+                month: 'numeric',
+                day: '2-digit',
+              }).format(new Date(item.serviceDate))}
+          </Text>
+          <Text style={styles.description}>{item.desc}</Text>
+          <Text style={styles.qty}>{item.qty}</Text>
+          <Text style={styles.rate}>{item.rate?.toLocaleString(undefined, { maximumFractionDigits: 2 })}</Text>
+          <Text style={styles.gst}>{item.gst ? '10%' : '0'}</Text>
+          <Text style={styles.amount}>{total.toLocaleString(undefined, { maximumFractionDigits: 2 })}</Text>
+        </View>
+      );
+    });
   return <Fragment>{rows}</Fragment>;
 };
 

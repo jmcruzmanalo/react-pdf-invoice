@@ -25,7 +25,6 @@ const InvoiceItemsTable: FC<InvoiceItemTableProps> = ({ invoice }) => (
   <View style={styles.tableContainer}>
     <InvoiceTableHeader />
     {invoice.items && <InvoiceTableRow items={invoice.items} />}
-    {/* <InvoiceTableBlankSpace rowsCount={tableRowsCount - invoice.items.length} /> */}
   </View>
 );
 

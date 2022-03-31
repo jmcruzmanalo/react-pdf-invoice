@@ -2,6 +2,7 @@ import React, { FC } from 'react';
 import { Text, View, StyleSheet } from '@react-pdf/renderer';
 import { InvoiceItem } from './InvoiceInterface';
 import { PartialDeep } from 'type-fest';
+import { calculateGstTotal, calculateSubTotal } from './calculateValues';
 
 const styles = StyleSheet.create({
   totalContainer: {
@@ -38,23 +39,23 @@ interface InvoiceTableFooterProps {
 }
 
 const InvoiceTableFooter: FC<InvoiceTableFooterProps> = ({ items }) => {
-  const total = items
-    .filter((item): item is PartialDeep<InvoiceItem> => !!item)
-    .map((item) => (item?.qty ?? 0) * (item?.rate ?? 0))
-    .reduce((accumulator, currentValue) => accumulator + currentValue, 0);
+  const subTotal = calculateSubTotal(items);
+  const gstTotal = calculateGstTotal(items);
   return (
     <View style={styles.totalContainer}>
       <View style={styles.row}>
         <Text style={styles.description}>SUBTOTAL</Text>
-        <Text style={styles.total}>{total.toLocaleString(undefined, { maximumFractionDigits: 2 })}</Text>
+        <Text style={styles.total}>{subTotal.toLocaleString(undefined, { maximumFractionDigits: 2 })}</Text>
       </View>
       <View style={styles.row}>
         <Text style={styles.description}>GST</Text>
-        <Text style={styles.total}>{total.toLocaleString(undefined, { maximumFractionDigits: 2 })}</Text>
+        <Text style={styles.total}>{gstTotal.toLocaleString(undefined, { maximumFractionDigits: 2 })}</Text>
       </View>
       <View style={styles.row}>
         <Text style={styles.description}>GRANDTOTAL</Text>
-        <Text style={styles.total}>{total.toLocaleString(undefined, { maximumFractionDigits: 2 })}</Text>
+        <Text style={styles.total}>
+          {(subTotal + gstTotal).toLocaleString(undefined, { maximumFractionDigits: 2 })}
+        </Text>
       </View>
     </View>
   );

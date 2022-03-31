@@ -10,6 +10,143 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
 
+input,
+select,
+textarea {
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  border-radius: 0;
+  border: none;
+  padding: 10px 15px;
+  margin-bottom: 1rem;
+  font-size: 1rem;
+  background: #efefef;
+}
+
+.columns {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.column-one,
+.column-two {
+  width: 50%;
+}
+
+.column {
+  width: 48%;
+}
+
+.checkbox {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+input[type='checkbox'] {
+  width: auto;
+  margin: 0 5px 0 0;
+  padding: 0;
+}
+
+.companyName {
+  font-size: 1.8rem;
+  font-weight: bold;
+}
+
+button {
+  font-size: 1rem;
+  background: #732ec7;
+  color: white;
+  border-radius: 75px;
+  border: none;
+  padding: 0.5rem 2rem;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+.total {
+  font-weight: bold;
+  font-size: 1.2em;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+}
+
+.total label {
+  width: 50%;
+  text-align: right;
+  padding: 10px 15px;
+  margin-bottom: 1rem;
+}
+.remove {
+  background: #c83227;
+  padding: 0;
+  margin: 0 0 1rem;
+  width: 25px;
+  height: 25px;
+  display: inline-block;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-weight: bolder;
+  line-height: 0;
+  max-width: 25px;
+}
+.formtable,
+.tableHeader {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+}
+
+.tableHeader {
+  text-align: center;
+  font-weight: bold;
+  text-transform: uppercase;
+  background: #3d73ff;
+  color: white;
+  margin-bottom: 1rem;
+}
+
+.formtable input,
+.tableHeader > div {
+  padding: 10px 5px;
+}
+.ndisno {
+  width: 19%;
+}
+.serviceDate {
+  width: 11%;
+}
+.desc {
+  width: 22%;
+}
+.qty {
+  width: 4%;
+}
+.rate {
+  width: 14%;
+}
+.gst {
+  width: 4% !important;
+  margin-bottom: 1rem !important;
+}
+
+.initialtotal {
+  width: 17%;
+}
+
+.remove,
+.empty {
+  width: 2%;
+  text-align: center;
+}
 /* TODO: Remove this */
 .react-pdf-generator-root {
   border: 1px solid red;
